@@ -81,7 +81,7 @@ no_album = set()
 
 def main():
   try:
-    
+
     print (get_all_items(100))
     print(get_album_ids(25))
     print(find_them(ids_from_albums, all_ids))
@@ -91,7 +91,7 @@ def main():
 
         print (str(i) + ') ' + get_details(x))
         i = i + 1
-     
+
   except AccessTokenRefreshError:
     # The AccessTokenRefreshError exception is raised if the credentials
     # have been revoked by the user or they have expired.
@@ -111,16 +111,16 @@ def get_all_items(ps):
 
       for item in all_mediaitems:
         all_ids.add(item['id'])
-        
+
       request = service.mediaItems().list_next(request, response)
       i = i + ps
       print (str(i) + ' processed so far...')
       #if i > 500:
       # break
-      
+
     id_count = len(all_ids)
     return ('All mediaItem IDs (' + str(id_count) + ') collected!')
-    
+
 
 def get_album_ids(ps):
     #Gets a list of all album IDs
@@ -135,11 +135,11 @@ def get_album_ids(ps):
       all_albums_res = response.get('albums', [])
 
       for item in all_albums_res:
-        
+
         all_albums.add(item['id'])
         id_count = get_items_in_album(item['id'])
         total_ids_in_albums =  total_ids_in_albums + id_count
-                
+
       request = service.mediaItems().list_next(request, response)
       i = i + ps
       print (str(i) + ' albums processed so far...')
@@ -147,7 +147,7 @@ def get_album_ids(ps):
       #  break
 
     album_count = len(all_albums)
-    
+
     return (str(total_ids_in_albums) + ' total mediaItems from ' + str(album_count) + ' albums')
 
 
@@ -175,7 +175,7 @@ def get_items_in_album(albumId):
 
     id_count = len(ids_from_albums)
     return id_count
-            
+
 
 def get_details(mediaitem):
   #Gets the details of a single mediaItem
