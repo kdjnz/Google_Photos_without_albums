@@ -1,0 +1,3 @@
+Currently the count of retrieving all mediaItem IDs is based on the number of pages loaded, which via the API is 100 items on each page. 
+However, when I run it, the final count provided is 12,000 even though the actual count of items is 10,600.
+So this initial count isn't an accurate reflection on the number of total items. 
