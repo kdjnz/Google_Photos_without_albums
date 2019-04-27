@@ -14,7 +14,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# https://developers.google.com/api-client-library/python/start/get_started
+# Main structure of this is from sample code available from https://developers.google.com/api-client-library/python/start/get_started
+# Modified from using the Calendar service to Photos
+
+# Uses Python 3.7.3
 
 import json
 import httplib2
@@ -27,8 +30,8 @@ from oauth2client.client import AccessTokenRefreshError
 from oauth2client.client import OAuth2WebServerFlow
 
 # For this example, the client id and client secret are command-line arguments.
-client_id = '984906845754-sjigo0sol9um69meshbsq3djeqp9at8s.apps.googleusercontent.com'
-client_secret = 'uZHfhF1kXZWgLsUMdYA_XPY6'
+client_id = sys.argv[1]
+client_secret = sys.argv[2]
 
 # The scope URL for read/write access to a user's photos
 scope = 'https://www.googleapis.com/auth/photoslibrary'
@@ -78,7 +81,6 @@ all_albums = set()
 ids_from_albums = set()
 no_album = set()
 
-
 def main():
   try:
 
@@ -97,9 +99,10 @@ def main():
     # have been revoked by the user or they have expired.
     print ('The credentials have been revoked or expired, please re-run the application to re-authorize')
 
-
 def get_all_items(ps):
 #Gets a list of all mediaItem IDs
+    Print ('Retrieving all file IDs...')
+
     nextpageToken = None
     i=0
     request = service.mediaItems().list(pageSize=ps, pageToken=nextpageToken)
@@ -114,16 +117,15 @@ def get_all_items(ps):
 
       request = service.mediaItems().list_next(request, response)
       i = i + ps
-      print (str(i) + ' processed so far...')
-      #if i > 500:
-      # break
+      print (str(i) + ' items processed so far...')
 
     id_count = len(all_ids)
     return ('All mediaItem IDs (' + str(id_count) + ') collected!')
 
-
 def get_album_ids(ps):
     #Gets a list of all album IDs
+    Print ('Retrieving all album IDs...')
+
     i=0
     total_ids_in_albums = 0
     nextpageToken = None
@@ -143,13 +145,10 @@ def get_album_ids(ps):
       request = service.mediaItems().list_next(request, response)
       i = i + ps
       print (str(i) + ' albums processed so far...')
-      #if i > 10:
-      #  break
 
     album_count = len(all_albums)
 
     return (str(total_ids_in_albums) + ' total mediaItems from ' + str(album_count) + ' albums')
-
 
 def get_items_in_album(albumId):
     #Gets a list of mediaItem IDs for a specified Album ID
@@ -176,7 +175,6 @@ def get_items_in_album(albumId):
     id_count = len(ids_from_albums)
     return id_count
 
-
 def get_details(mediaitem):
   #Gets the details of a single mediaItem
   request = service.mediaItems().get(mediaItemId=mediaitem)
@@ -184,7 +182,6 @@ def get_details(mediaitem):
   URL = response.get('productUrl', [])
   FileName = response.get('filename', [])
   return (FileName + ' | ' + URL + '\n')
-
 
 def find_them(list_a, list_b):
   i=0
