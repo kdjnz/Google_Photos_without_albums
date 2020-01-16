@@ -23,4 +23,4 @@ https://developers.google.com/api-client-library/python/start/get_started
 Once set up, within the directory of the main.py file, at the Python command line type:
 $ main.py [client_id] [client_secret]
 
-Tip: Use a Google Photo instance with a few files to test it first. Currently I have 10,000+ files and I have get back a (correct) list of 5,000 items without folders...So it takes some time to work through these and create the output list.
+Tip: Use a Google Photo instance with a few files to test it first. Currently I have 10,000+ files and I get back a (correct) list of 5,000 items without folders...So it takes some time to work through these and create the output list.
